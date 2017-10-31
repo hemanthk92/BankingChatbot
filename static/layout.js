@@ -19,13 +19,14 @@
 
   var ENTER_KEY_CODE = 13;
   var queryInput, resultDiv;
-
+  var sessionid = Date.now();
   window.onload = init;
 
   function init() {
     queryInput = document.getElementById("q");
     resultDiv = document.getElementById("result");
     queryInput.addEventListener("keydown", queryInputKeyDown);
+
   
   }
 
@@ -40,7 +41,8 @@
     createQueryNode(value);
     var responseNode = createResponseNode();
 
-    var response = sendRequest2(value)
+    var response = sendRequest(value, sessionid)
+    console.log(sessionid)
     console.log("This is after python function call")
 
     console.log(response)
@@ -79,11 +81,11 @@
     //node.innerHTML = JSON.stringify(response, null, 2);
   }
 
-  function sendRequest2(value) {
+  function sendRequest(value, sessionid) {
     //alert("in send req")
 
     console.log("hey")
-    var URL = "/run_test_intent?input_string=" + value
+    var URL = "/run_test_intent?input_string=" + value + "&sessionid=" + sessionid
     //var URL = "https://conversation.googleapis.com/v1alpha/projects/dialogflow-enterprise-demo/agents/dialogflow-enterprise-demo/intents"
 
     //var request = "{'query_input': {'text': {'text': ' " + value + "','language_code': 'en-US'}}}";
