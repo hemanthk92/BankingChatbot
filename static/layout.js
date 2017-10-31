@@ -69,7 +69,7 @@
 
   function setResponseOnNode(response, node) {
 
-    node.innerHTML = response ? response : "[empty response]";
+    node.innerHTML = response ? response : "";
     node.setAttribute('data-actual-response', response);
   }
 
