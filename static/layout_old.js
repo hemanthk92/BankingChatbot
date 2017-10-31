@@ -102,7 +102,7 @@
     xhttp.setRequestHeader("Authorization", "Bearer " + access_token);
 
     xhttp.send(request);
-
+    console.log(xhttp.responseText)
     return xhttp.responseText;
     
 

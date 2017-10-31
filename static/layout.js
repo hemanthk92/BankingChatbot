@@ -18,32 +18,22 @@
   "use strict";
 
   var ENTER_KEY_CODE = 13;
-  var queryInput, resultDiv, accessTokenInput;
+  var queryInput, resultDiv;
 
   window.onload = init;
 
   function init() {
     queryInput = document.getElementById("q");
     resultDiv = document.getElementById("result");
-    accessTokenInput = document.getElementById("access_token");
-    var setAccessTokenButton = document.getElementById("set_access_token");
-
     queryInput.addEventListener("keydown", queryInputKeyDown);
-    setAccessTokenButton.addEventListener("click", setAccessToken);
-  }
-
-  function setAccessToken() {
-    document.getElementById("placeholder").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "block";
-    window.init(accessTokenInput.value);
+  
   }
 
   function queryInputKeyDown(event) {
     if (event.which !== ENTER_KEY_CODE) {
       return;
     }
-    console.log("we made it here")
-    console.log("sss")
+
     var value = queryInput.value;
     queryInput.value = "";
 
@@ -51,12 +41,15 @@
     var responseNode = createResponseNode();
 
     var response = sendRequest2(value)
-    console.log(response)
+    //console.log("HERE")
+    //console.log(response)
     
     //var result_json = JSON.parse(response);
-    //var result = result_json.queryResult.fulfillment.text
-    //setResponseJSON(result_json);
-    setResponseOnNode(response, responseNode);
+    
+    setResponseJSON(response);
+  
+
+    setResponseOnNode(response.split('messages')[1].split('text:')[1].split('\n')[0].replace(/['"]+/g, ''), responseNode);
   }
 
   function createQueryNode(query) {
@@ -81,7 +74,8 @@
 
   function setResponseJSON(response) {
     var node = document.getElementById("jsonResponse");
-    node.innerHTML = JSON.stringify(response, null, 2);
+    node.innerHTML = response 
+    //node.innerHTML = JSON.stringify(response, null, 2);
   }
 
   function sendRequest2(value) {
@@ -101,8 +95,10 @@
     xhttp.open("GET", URL, false);
     //xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
     //xhttp.setRequestHeader("Authorization", "Bearer " + access_token);
+    
     xhttp.send();
-    return xhttp.responseText;
+
+    return xhttp.responseText
     
 
   }
