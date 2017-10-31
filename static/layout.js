@@ -41,15 +41,15 @@
     var responseNode = createResponseNode();
 
     var response = sendRequest2(value)
-    //console.log("HERE")
-    //console.log(response)
-    
-    //var result_json = JSON.parse(response);
-    
-    setResponseJSON(response);
-  
+    console.log("This is after python function call")
 
-    setResponseOnNode(response.split('messages')[1].split('text:')[1].split('\n')[0].replace(/['"]+/g, ''), responseNode);
+    console.log(response)
+    
+    var result_json = JSON.parse(response);
+    
+    setResponseJSON(atob(result_json["object"]));
+  
+    setResponseOnNode(result_json["text"], responseNode);
   }
 
   function createQueryNode(query) {
@@ -68,6 +68,7 @@
   }
 
   function setResponseOnNode(response, node) {
+    console.log(response)
     node.innerHTML = response ? response : "[empty response]";
     node.setAttribute('data-actual-response', response);
   }
@@ -80,6 +81,7 @@
 
   function sendRequest2(value) {
     //alert("in send req")
+
     console.log("hey")
     var URL = "/run_test_intent?input_string=" + value
     //var URL = "https://conversation.googleapis.com/v1alpha/projects/dialogflow-enterprise-demo/agents/dialogflow-enterprise-demo/intents"
@@ -98,7 +100,7 @@
     
     xhttp.send();
 
-    return xhttp.responseText
+    return  xhttp.responseText;
     
 
   }
