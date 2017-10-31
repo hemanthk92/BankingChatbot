@@ -44,8 +44,6 @@
     var response = sendRequest(value, sessionid)
     console.log(sessionid)
     console.log("This is after python function call")
-
-    console.log(response)
     
     var result_json = JSON.parse(response);
     
@@ -70,7 +68,7 @@
   }
 
   function setResponseOnNode(response, node) {
-    console.log(response)
+
     node.innerHTML = response ? response : "[empty response]";
     node.setAttribute('data-actual-response', response);
   }
@@ -84,7 +82,6 @@
   function sendRequest(value, sessionid) {
     //alert("in send req")
 
-    console.log("hey")
     var URL = "/run_test_intent?input_string=" + value + "&sessionid=" + sessionid
     //var URL = "https://conversation.googleapis.com/v1alpha/projects/dialogflow-enterprise-demo/agents/dialogflow-enterprise-demo/intents"
 
